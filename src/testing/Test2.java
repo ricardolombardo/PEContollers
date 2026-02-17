@@ -70,20 +70,27 @@ public class Test2 {
 	
 	
 	public static void cargarLinea(Hashtable<String,Sector> sectores, int inicio, int fin,int latitud) {
-		for (int l=inicio;l<fin;l++) {	
+		
+		
+		for (int l=0;l<20;l++) {
+			
 			Hashtable<String,Persona> personas=new Hashtable<String, Persona>();
 			
-			Sector sector=new Sector(l,latitud,personas);
-			sectores.put(String.valueOf(id), sector);
+			//Ascendencia ascendencia=new Ascendencia(4,5,1);
+			TipoRegion tipo=TipoRegion.CONO_SUR;
+			
+			Sector sector=new Sector(0,l,"provinciaArgentina",tipo);
 			
 			for(int i=0;i<100;i++) {
 				Persona p=new Persona(sector);
 				personas.put(p.getId(), p);
 			}	
 			
-			
-			id++;
+			sector.setPersonas(personas);
+			sectores.put(String.valueOf(l), sector);
 		}
+		
+		Ascendencia ascendencia=new Ascendencia(0.4,0.5,0.1);
 	}
 	
 	public static Pais cargarPais() {
