@@ -29,6 +29,7 @@ public class Principal extends JFrame{
 		this.setVisible(true);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	public void initComponents() {
@@ -37,10 +38,13 @@ public class Principal extends JFrame{
 		panelBotones=new JPanel();
 		panelBotones.setLayout(new GridLayout(20,1,5,5));
 		
+		Hashtable<String,Pais> paises= (Hashtable<String, Pais>) componentes.get("Paises");
 		
-		Pais pais=(Pais) componentes.get("Pais");
-		for(String cvSector:pais.getSectores().keySet()) {
-			panelMapa.getPanelIJ(pais.getSectores().get(cvSector).getCoordenadaX(), pais.getSectores().get(cvSector).getCoordenadaY()).setBackground(Color.red);
+		for(String cvPais:paises.keySet()) {
+			Pais pais=paises.get(cvPais);
+			for(String cvSector:pais.getSectores().keySet()) {
+				panelMapa.getPanelIJ(pais.getSectores().get(cvSector).getCoordenadaX(), pais.getSectores().get(cvSector).getCoordenadaY()).setBackground(Color.red);
+			}
 		}
 		
 		JButton btnCapacIntelec=new JButton("Capac Intele");
@@ -48,15 +52,17 @@ public class Principal extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Pais pais=(Pais) componentes.get("Pais");
-				for(String cvSector:pais.getSectores().keySet()) {
-					JPanel panelRegion=panelMapa.getPanelIJ(pais.getSectores().get(cvSector).getCoordenadaX(), pais.getSectores().get(cvSector).getCoordenadaY());
-					
-					double promedio = pais.getSectores().get(cvSector).getCoeficienteMentalPromedio();
 
-					NivelIntelectual nivel = NivelIntelectual.fromPromedio(promedio);
-					panelRegion.setBackground(nivel.getColor());
+				for(String cvPais:paises.keySet()) {
+					Pais pais=paises.get(cvPais);
+					for(String cvSector:pais.getSectores().keySet()) {
+						JPanel panelRegion=panelMapa.getPanelIJ(pais.getSectores().get(cvSector).getCoordenadaX(), pais.getSectores().get(cvSector).getCoordenadaY());
+						
+						double promedio = pais.getSectores().get(cvSector).getCoeficienteMentalPromedio();
 
+						NivelIntelectual nivel = NivelIntelectual.fromPromedio(promedio);
+						panelRegion.setBackground(nivel.getColor());
+					}
 				}
 				
 			}
@@ -74,6 +80,4 @@ public class Principal extends JFrame{
 		this.componentes.put(key, object);
 	}
 	
-	
-
 }
