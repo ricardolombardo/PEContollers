@@ -12,6 +12,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import constants.PaisesConstants;
+import controllers.CapacidadIntelectualController;
+import controllers.HabitoConsumoController;
 import entities.Pais;
 import model.NivelIntelectual;
 
@@ -20,9 +23,11 @@ public class Principal extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private JPanel panelBotones;
 	private MapaPanel panelMapa;
-	private Hashtable<String,Object> componentes=new Hashtable<String,Object>(); 
+	private Hashtable<String,Object> componentes=new Hashtable<String,Object>();
+	private Hashtable<String,Color> colorPais=new Hashtable<String,Color>();
 	
 	public Principal(Hashtable<String,Object> componentes) {
+		this.generarColorPais();
 		this.componentes=componentes;
 		this.panelMapa =(MapaPanel) componentes.get("PanelMapa");
 		this.initComponents();
@@ -43,7 +48,7 @@ public class Principal extends JFrame{
 		for(String cvPais:paises.keySet()) {
 			Pais pais=paises.get(cvPais);
 			for(String cvSector:pais.getSectores().keySet()) {
-				panelMapa.getPanelIJ(pais.getSectores().get(cvSector).getCoordenadaX(), pais.getSectores().get(cvSector).getCoordenadaY()).setBackground(Color.red);
+				panelMapa.getPanelIJ(pais.getSectores().get(cvSector).getCoordenadaX(), pais.getSectores().get(cvSector).getCoordenadaY()).setBackground(colorPais.get(pais.getNombre()));
 			}
 		}
 		
@@ -52,24 +57,24 @@ public class Principal extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				for(String cvPais:paises.keySet()) {
-					Pais pais=paises.get(cvPais);
-					for(String cvSector:pais.getSectores().keySet()) {
-						JPanel panelRegion=panelMapa.getPanelIJ(pais.getSectores().get(cvSector).getCoordenadaX(), pais.getSectores().get(cvSector).getCoordenadaY());
-						
-						double promedio = pais.getSectores().get(cvSector).getCoeficienteMentalPromedio();
-
-						NivelIntelectual nivel = NivelIntelectual.fromPromedio(promedio);
-						panelRegion.setBackground(nivel.getColor());
-					}
-				}
-				
+				CapacidadIntelectualController.mostrarCapacidadIntelectual(paises, panelMapa);
 			}
 			
 		});
 		panelBotones.add(btnCapacIntelec);
-		for(int i=0;i<19;i++) {
+		
+		JButton btnHabitoConsumo=new JButton("Hab Consumo");
+		btnHabitoConsumo.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				HabitoConsumoController.mostrarHabitoConsumo(paises, panelMapa);
+			}
+			
+		});
+		panelBotones.add(btnHabitoConsumo);
+		
+		for(int i=0;i<18;i++) {
 			JButton btn=new JButton(String.valueOf(i));
 			panelBotones.add(btn);
 		}
@@ -78,6 +83,11 @@ public class Principal extends JFrame{
 	
 	public void addComponent(String key,Object object) {
 		this.componentes.put(key, object);
+	}
+	
+	public void generarColorPais() {
+		colorPais.put(PaisesConstants.ARGENTINA, Color.blue);
+		colorPais.put(PaisesConstants.BRASIL, Color.green);
 	}
 	
 }

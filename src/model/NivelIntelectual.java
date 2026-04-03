@@ -4,9 +4,11 @@ import java.awt.Color;
 
 public enum NivelIntelectual {
 
-    ALTO(0.6, Color.YELLOW),
-    MEDIO(0.2, Color.BLUE),
-    BAJO(0.0, Color.GREEN);
+    ALTO(0.8, Color.YELLOW),
+    MEDIOALTO(0.6, Color.RED),
+    MEDIO(0.4, Color.BLUE),
+    MEDIOBAJO(0.2, Color.GREEN),
+    BAJO(0.0, Color.BLACK);
 
     private final double minimo;
     private final Color color;
