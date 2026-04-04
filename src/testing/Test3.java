@@ -2,6 +2,8 @@ package testing;
 
 import constants.PaisesConstants;
 import entities.*;
+import entities.paises.AbstractPaisFactory;
+import entities.paises.Pais;
 
 public class Test3 {
 	public static void main(String args[]) {

@@ -3,8 +3,8 @@ package controllers;
 import java.util.Hashtable;
 
 import constants.PaisesConstants;
-import entities.AbstractPaisFactory;
-import entities.Pais;
+import entities.paises.AbstractPaisFactory;
+import entities.paises.Pais;
 import views.MapaPanel;
 import views.PrincipalView;
 

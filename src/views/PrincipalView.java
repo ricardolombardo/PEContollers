@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import constants.PaisesConstants;
 import controllers.CapacidadIntelectualController;
 import controllers.HabitoConsumoController;
-import entities.Pais;
+import entities.paises.Pais;
 import model.NivelIntelectual;
 
 public class PrincipalView extends JFrame{

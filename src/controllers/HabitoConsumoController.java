@@ -3,7 +3,8 @@ package controllers;
 import java.math.BigDecimal;
 import java.util.Hashtable;
 import javax.swing.JPanel;
-import entities.Pais;
+
+import entities.paises.Pais;
 import model.NivelConsumo;
 import views.MapaPanel;
 

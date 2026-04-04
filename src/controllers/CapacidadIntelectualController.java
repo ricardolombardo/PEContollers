@@ -4,7 +4,7 @@ import java.util.Hashtable;
 
 import javax.swing.JPanel;
 
-import entities.Pais;
+import entities.paises.Pais;
 import model.NivelIntelectual;
 import views.MapaPanel;
 
