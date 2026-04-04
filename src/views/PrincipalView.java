@@ -11,6 +11,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import constants.PaisesConstants;
 import controllers.CapacidadIntelectualController;
@@ -18,7 +21,7 @@ import controllers.HabitoConsumoController;
 import entities.Pais;
 import model.NivelIntelectual;
 
-public class Principal extends JFrame{
+public class PrincipalView extends JFrame{
 	
 	private static final long serialVersionUID = 1L;
 	private JPanel panelBotones;
@@ -26,7 +29,7 @@ public class Principal extends JFrame{
 	private Hashtable<String,Object> componentes=new Hashtable<String,Object>();
 	private Hashtable<String,Color> colorPais=new Hashtable<String,Color>();
 	
-	public Principal(Hashtable<String,Object> componentes) {
+	public PrincipalView(Hashtable<String,Object> componentes) {
 		this.generarColorPais();
 		this.componentes=componentes;
 		this.panelMapa =(MapaPanel) componentes.get("PanelMapa");
@@ -74,7 +77,33 @@ public class Principal extends JFrame{
 		});
 		panelBotones.add(btnHabitoConsumo);
 		
-		for(int i=0;i<18;i++) {
+		JButton btnDatos=new JButton("Datos");
+		btnDatos.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JTable tabla = new JTable();
+				DefaultTableModel model = new DefaultTableModel();
+				model.addColumn("Pais");
+				model.addColumn("Cantidad Personas");
+				model.addColumn("Coeficiente Intelectual");
+				model.addColumn("Coeficiente Intelectual Promedio");
+				model.addColumn("Consumo");
+				model.addColumn("Consumo per capita");
+				for(String cvPais:paises.keySet()) {
+					Pais pais=paises.get(cvPais);
+					model.addRow(new Object[] {pais.getNombre(),pais.getCantidadPersonas(),pais.getCoeficienteIntelectual(),pais.getCoeficienteIntelectualPromedio(),pais.getConsumo(),pais.getConsumoPerCapita()});
+				}
+				tabla.setModel(model);
+				JScrollPane scrollPane = new JScrollPane(tabla);
+				MensajeView mensaje = new MensajeView("Datos");			
+				mensaje.getPanelCentral().add(scrollPane, BorderLayout.CENTER);
+			}
+			
+		});
+		panelBotones.add(btnDatos);
+		
+		for(int i=0;i<17;i++) {
 			JButton btn=new JButton(String.valueOf(i));
 			panelBotones.add(btn);
 		}
