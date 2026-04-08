@@ -15,6 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import DAO.PaisDAO;
 import constants.PaisesConstants;
 import controllers.CapacidadIntelectualController;
 import controllers.HabitoConsumoController;
@@ -82,17 +83,30 @@ public class PrincipalView extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				PaisDAO paisDao=new PaisDAO();
+				paisDao.getPaises();
 				JTable tabla = new JTable();
 				DefaultTableModel model = new DefaultTableModel();
 				model.addColumn("Pais");
 				model.addColumn("Cantidad Personas");
-				model.addColumn("Coeficiente Intelectual");
 				model.addColumn("Coeficiente Intelectual Promedio");
 				model.addColumn("Consumo");
 				model.addColumn("Consumo per capita");
+				model.addColumn("Minerales");
+				model.addColumn("Petroleo");
+				
 				for(String cvPais:paises.keySet()) {
 					Pais pais=paises.get(cvPais);
-					model.addRow(new Object[] {pais.getNombre(),pais.getCantidadPersonas(),pais.getCoeficienteIntelectual(),pais.getCoeficienteIntelectualPromedio(),pais.getConsumo(),pais.getConsumoPerCapita()});
+					model.addRow(new Object[] {pais.getNombre(),
+							pais.getCantidadPersonas(),
+							pais.getCoeficienteIntelectualPromedio(),
+							pais.getConsumo(),
+							pais.getConsumoPerCapita(),
+							pais.getRecursos().get("Mineral").getValor(),
+							pais.getRecursos().get("Petroleo").getValor()
+							});
+					paisDao.insertarPaisSimulacion(cvPais, 1, 1980);
+					
 				}
 				tabla.setModel(model);
 				JScrollPane scrollPane = new JScrollPane(tabla);
